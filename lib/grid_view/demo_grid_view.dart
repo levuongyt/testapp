@@ -154,8 +154,8 @@ class GameModel {
   bool isOpen;
   String value;
   GameModel(this.value, {this.isOpen = false});
-  // @override
-  // String toString() {
-  //   return 'GameModel{isOpen: $isOpen, value: $value}';
-  // }
+  @override
+  String toString() {
+    return 'GameModel{isOpen: $isOpen, value: $value}';
+  }
 }

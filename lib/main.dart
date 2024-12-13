@@ -1,14 +1,29 @@
+import 'package:btvn_buoi11/app_phone/controller/thing_bought_controller.dart';
+import 'package:btvn_buoi11/app_phone/model/demLacalString.dart';
+import 'package:btvn_buoi11/app_phone/model/theme_app_model.dart';
+import 'package:btvn_buoi11/app_phone/ui/product.dart';
+import 'package:btvn_buoi11/firebase_options.dart';
 import 'package:btvn_buoi11/getX/binding/my_binding.dart';
 import 'package:btvn_buoi11/getX/binding/ui_getx_binding.dart';
+import 'package:btvn_buoi11/labAPI/views/bitcoin_view.dart';
 import 'package:btvn_buoi11/provider/counter.dart';
 import 'package:btvn_buoi11/provider/counter_page.dart';
 import 'package:btvn_buoi11/riverpod/couter_page_riverpod.dart';
+import 'package:btvn_buoi11/setiitn.dart';
 import 'package:btvn_buoi11/widget_common/base_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:provider/provider.dart';
+import 'app_phone/model/phones_model.dart';
+import 'app_phone/ui/dangky.dart';
+import 'app_phone/ui/dangnhap.dart';
+import 'app_phone/ui/demo_firestore.dart';
+import 'app_phone/ui/phone_ui.dart';
 import 'bai2/Screen_Bai2.dart';
 import 'bai3/Screen_bai3.dart';
 import 'bottom_sheet/demo_bottom_sheet.dart';
@@ -32,9 +47,10 @@ import 'grid_view/demo_grid_view.dart';
 import 'list_view/list_view_demo_screen.dart';
 import 'mvvm_mini_demo/view/mvvm_demo_view.dart';
 
-void main() {
+//void main() {
   //runApp(const MyApp());
-  runApp(const GetMyApp());
+
+ // runApp(const GetMyApp());
 
   ///Provider
   // runApp(
@@ -50,15 +66,41 @@ void main() {
   //     child: MyApp(),
   //   ),
   // );
+//}
+Future<void> configure()async{
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.android,
+  );
 }
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configure();
+  await Firebase.initializeApp();
+  final ThingBoughtController controller1=Get.put(ThingBoughtController());
+  await controller1.readTheme();
+  //await controller1.readLanguage();
 
+// Ideal time to initialize
+ // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+//...
+runApp(GetMyApp());
+}
 class GetMyApp extends StatelessWidget {
-  const GetMyApp({super.key});
-
+   const GetMyApp({super.key});
   @override
   Widget build(BuildContext context) {
+    final ThingBoughtController controller=Get.find();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      translations: LocalString(),
+      //locale: Get.locale,
+      locale: controller.valueLocale,
+    //  fallbackLocale: Locale('${controller.readLanguage()}'),
+      theme: ThemesApp.light,
+     // theme: controller.valueTheme == 'dark' ? ThemesApp.dark : ThemesApp.light,
+      darkTheme: ThemesApp.dark,
+      themeMode: controller.isCheckDarkMode.value ? ThemeMode.dark : ThemeMode.light,
+      //themeMode: controller.valueTheme == 'dark' ? ThemeMode.dark : ThemeMode.light,
       // initialBinding: MyBinding(),
       // getPages: [
       //   GetPage(
@@ -69,7 +111,16 @@ class GetMyApp extends StatelessWidget {
       //   )
       // ],
       // home: const GetUIBinding(),
-      home: DangNhap(),
+      home: LoaderOverlay(
+        child: DemoFirestore(),
+      overlayWidgetBuilder: (_){
+        return const Center(
+          child: SpinKitCubeGrid(
+            color: Colors.blueAccent,
+            size: 50,
+          ),
+        );
+      },),
     );
   }
 }

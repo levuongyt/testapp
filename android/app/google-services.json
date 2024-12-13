@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1077517710928",
+    "project_id": "fir-autho-flutter-2232f",
+    "storage_bucket": "fir-autho-flutter-2232f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077517710928:android:bdcef066ef418b6d330355",
+        "android_client_info": {
+          "package_name": "com.example.btvn_buoi11"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9CThte8iBbAZrCMgVOJnboFN7U6mrE0Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

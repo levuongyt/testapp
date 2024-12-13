@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">demologin</string>
+    <string name="facebook_app_id">1036732454397501</string>
+    <string name="fb_login_protocol_scheme">fb1036732454397501</string>
+    <string name="facebook_client_token">1bc59a71c6b3ca528574ca92dab5cde4</string>
+</resources>

@@ -8,6 +8,8 @@ class ImageApp{
   static const String imageChicken='${baseUrlImageLocal}imageChicken.jpg';
   static const String imageIphone15='${baseUrlImageLocal}iphone15.jpg';
   static const String imageV='${baseUrlImageLocal}imageV.png';
+  static const String imageMoney='${baseUrlImageLocal}imageMoney.jpg';
+
 
 
 

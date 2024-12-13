@@ -1,8 +1,8 @@
 # btvn_buoi11
 
 Mô tả dự án: Quản lí thu chi cá nhân
- - Ứng dụng giúp người dùng quản lí, theo dõi các khoản thu nhập và chi tiêu cá nhân. Nắm rõ được tình hình tài chính cá nhân để có thể đưa ra được quyết định chi tiêu một cách hiệu quả.
- * Các tính năng chính của ứng dụng:
+- Ứng dụng giúp người dùng quản lí, theo dõi các khoản thu nhập và chi tiêu cá nhân. Nắm rõ được tình hình tài chính cá nhân để có thể đưa ra được quyết định chi tiêu một cách hiệu quả.
+- Các tính năng chính của ứng dụng:
   - 1, Quản lí thu nhập và chi tiêu:
     - Ghi nhận các giao dịch thu nhập và chi tiêu của người dùng và được phân loại theo từng danh mục cụ thể (ăn uống,mua sắm ...).
     - Hiển thị tổng số dư và số dư hiện tại giúp người dùng biết tình hỉnh tài chính của mình.

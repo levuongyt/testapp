@@ -1,33 +1,54 @@
-# btvn_buoi11
+## Highlight Dialog
+## Mô tả
+Sử dụng dữ liệu file .toml và file âm thanh có định dạng .oga để xử lý và highlight từ đồng bộ với thời gian audio đang phát. Và thực hiện sự kiện chèn ảnh dựa vào timeEllsed, để ảnh xuất hiện và chuyển đổi ảnh.
 
-Mô tả dự án: Quản lí thu chi cá nhân
-- Ứng dụng giúp người dùng quản lí, theo dõi các khoản thu nhập và chi tiêu cá nhân. Nắm rõ được tình hình tài chính cá nhân để có thể đưa ra được quyết định chi tiêu một cách hiệu quả.
-- Các tính năng chính của ứng dụng:
-  - 1, Quản lí thu nhập và chi tiêu:
-    - Ghi nhận các giao dịch thu nhập và chi tiêu của người dùng và được phân loại theo từng danh mục cụ thể (ăn uống,mua sắm ...).
-    - Hiển thị tổng số dư và số dư hiện tại giúp người dùng biết tình hỉnh tài chính của mình.
-  - 2, Theo dõi giao dịch:
-    - Hiển thị lịch sử các giao dịch của người dùng.
-    - Tra cứu,lọc các giao dịch theo ngày.
-  - 3, Quản lí danh mục:
-    - Thêm,sửa,xóa danh mục.
-  - 4, Thống kê,báo cáo:
-    - Hiển thị biểu đồ thống kê thu nhập và chi tiêu theo tháng
-    - Tính toán tổng thu nhập,chi tiêu trong tháng và trung bình thu chi trên ngày.
-    - Thống kê chi tiết các giao dịch theo từng danh mục.
-  - 5, Quản lí tài khoản:
-    - Tùy chỉnh thông tin cá nhân
-    - Đặt lại mật khẩu
-  - 6, Cài đặt:
-    - Hỗ trợ nhiều ngôn ngữ và tùy chỉnh giao diện sáng,tối.
-    - Thay đổi tiền tệ.
-  
-![image](https://github.com/user-attachments/assets/af9d6108-77d6-411c-abf0-622c286c584a)
-![image](https://github.com/user-attachments/assets/bff238fc-ffc5-4610-8d88-87100d6c30a5)
-![image](https://github.com/user-attachments/assets/eca0a012-f1f8-44df-8ea5-896eae0d7179)
-![image](https://github.com/user-attachments/assets/0b7791b7-afea-4c76-b574-d6f0decb76c2)
-![image](https://github.com/user-attachments/assets/294ea284-d197-4d3d-8c9f-c218e408f03a)
-![image](https://github.com/user-attachments/assets/369c7289-3d47-476f-b625-dbcf3d9a3c53)
-![image](https://github.com/user-attachments/assets/9ff44be4-d843-44b1-b442-4eb8d8432447)
-![image](https://github.com/user-attachments/assets/fa1e4762-26b0-41a9-9450-3594fdd16243)
-![image](https://github.com/user-attachments/assets/4ae005cb-a2c7-488b-a723-c3c422df3da4)
+## Cấu trúc dự án
+- Assets: Chứa các file dữ liệu (output.oga, output.toml).
+- Model: Chứa cấu trúc dữ liệu và các phương pháp xử lý thông tin từ tệp TOML.
+- Controller: Chứa logic xử lí (tải dữ liệu, xử lí âm thanh).
+- View: Giao diện người dùng
+
+- Các thư viện sử dụng : get, audioplayers(phát âm thanh audio) , toml(xử lý dữ liệu dạng file .toml .
+
+## Chi tiết các phần
+
+# Model:
+- Xử lý dữ liệu từ tệp .toml ,
+- AudioInfo: Chứa thông tin về audio như nguồn phát, tốc độ, số kênh, và ngôn ngữ.
+- Timestamp: Định nghĩa các mốc thời gian, vị trí, độ dài từ cho từng từ trong đoạn hội thoại.
+- Event: Chứa thông tin về các sự kiện xảy ra trong ứng dụng (ví dụ: thay đổi hình ảnh).
+- BookModel: Mô hình chính chứa toàn bộ thông tin từ tệp TOML.
+
+# Controller:
+- Tải dữ liệu từ tệp TOML và âm thanh từ tệp audio
+- Điều khiển phát, tạm dừng và theo dõi tiến trình audio.
+- Cập nhật trạng thái giao diện theo thời gian thực dựa trên vị trí audio.
+
+Các hàm chính:
+- LoadData :  Tải tệp TOML từ thư mục `assets` và chuyển đổi thành mô hình `BookModel`. Xử lý lỗi khi tệp không hợp lệ hoặc thiếu dữ liệu.
+
+- startOrResumeReading:
+  - Bắt đầu hoặc tiếp tục phát audio.
+  - Quản lý trạng thái `isPlaying` để xác định trạng thái hiện tại của audio.
+
+- pauseReading:
+  - Tạm dừng phát audio và dừng bộ đếm thời gian.
+
+- startReading:
+  - Dùng bộ đếm thời gian (`Timer.periodic`) để theo dõi thời gian phát audio và cập nhật giao diện tương ứng.
+
+# View
+Hiển thị giao diện người dùng:
+
+- Vùng hiển thị ảnh động sau khi chèn và thay đổi theo timeElapsed trong event (dữ liệu file output.toml).
+- Hội thoại hiển thị dưới dạng các khung tin nhắn với màu sắc riêng để phân biệt các nhân vật (dựa vào speaker để lấy name và phân biệt đoạn văn bản của từng người).
+- Nút điều khiển dừng, phát âm thanh.
+
+- Hàm : _buildMessageBubbles
+  - Mục đích là hiển thị các đoạn văn bản của từng nhân vật, (Duyệt qua các đoạn hội thoại trong dữ liệu book.dialog. Tạo các widget Align để căn chỉnh tin nhắn về bên trái hoặc phải tùy thuộc vào người nói).
+- Hàm: _buildHighlightedText
+  - Mục đích là highlight tô vàng các từ đang được phát âm dựa vào timestamp và vị trí đang phát của audio. Sử dụng các hiệu ứng như backgroundColor để tô màu và đánh dấu từ đang highlight.
+- Hàm: _buildControlPanel
+  - Mục đích để điều khiển phát hoặc tạm dừng Audio dựa vào trạng thái isPlaying từ controller bằng Obx.
+
+
